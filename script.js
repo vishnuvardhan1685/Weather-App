@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('city-search');
     const searchButton = document.getElementById('search-btn');
 
+    // --- HELPER FUNCTIONS ---
     const getWeatherInfo = (wmoCode, isDay = 1) => {
         const mappings = { 0: { desc: "Clear sky", icon: isDay ? "fa-sun" : "fa-moon" }, 1: { desc: "Mainly clear", icon: isDay ? "fa-cloud-sun" : "fa-cloud-moon" }, 2: { desc: "Partly cloudy", icon: isDay ? "fa-cloud-sun" : "fa-cloud-moon" }, 3: { desc: "Overcast", icon: "fa-cloud" }, 45: { desc: "Fog", icon: "fa-smog" }, 48: { desc: "Rime fog", icon: "fa-smog" }, 51: { desc: "Light drizzle", icon: "fa-cloud-rain" }, 53: { desc: "Drizzle", icon: "fa-cloud-rain" }, 55: { desc: "Dense drizzle", icon: "fa-cloud-rain" }, 61: { desc: "Slight rain", icon: "fa-cloud-showers-heavy" }, 63: { desc: "Rain", icon: "fa-cloud-showers-heavy" }, 65: { desc: "Heavy rain", icon: "fa-cloud-showers-heavy" }, 71: { desc: "Slight snow", icon: "fa-snowflake" }, 73: { desc: "Snow", icon: "fa-snowflake" }, 75: { desc: "Heavy snow", icon: "fa-snowflake" }, 77: { desc: "Snow grains", icon: "fa-snowflake" }, 80: { desc: "Slight showers", icon: "fa-cloud-sun-rain" }, 81: { desc: "Showers", icon: "fa-cloud-sun-rain" }, 82: { desc: "Violent showers", icon: "fa-cloud-sun-rain" }, 85: { desc: "Slight snow showers", icon: "fa-snowflake" }, 86: { desc: "Heavy snow showers", icon: "fa-snowflake" }, 95: { desc: "Thunderstorm", icon: "fa-cloud-bolt" }, 96: { desc: "Thunderstorm + Hail", icon: "fa-cloud-bolt" }, 99: { desc: "Thunderstorm + Heavy Hail", icon: "fa-cloud-bolt" }, };
         return mappings[wmoCode] || { desc: "Unknown", icon: "fa-circle-question" };
@@ -39,8 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const updateCurrentWeather = ({ current }) => {
         const weatherInfo = getWeatherInfo(current.weather_code, current.is_day);
         document.getElementById('current-date').textContent = new Date(current.time).toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
-        document.getElementById('current-temp').innerHTML = `${Math.round(current.temperature_2m)}<span class="text-4xl align-super">°C</span>`;
-        document.getElementById('current-icon').className = `weather-icon fa-solid ${weatherInfo.icon} text-8xl md:text-9xl text-cyan-300`;
+        document.getElementById('current-temp').innerHTML = `${Math.round(current.temperature_2m)}<span>°C</span>`;
+        document.getElementById('current-icon').className = `fa-solid ${weatherInfo.icon}`;
         document.getElementById('current-desc').textContent = weatherInfo.desc;
     };
 
@@ -67,10 +68,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const hour = time.toLocaleTimeString([], { hour: 'numeric' });
             const weatherInfo = getWeatherInfo(hourly.weather_code[i], hourly.is_day[i]);
             const itemHTML = `
-                <div class="flex flex-col items-center gap-2 flex-shrink-0 bg-slate-800/50 p-4 rounded-2xl w-24">
-                    <p class="text-slate-400 text-sm">${hour}</p>
-                    <i class="fa-solid ${weatherInfo.icon} text-2xl text-cyan-300"></i>
-                    <p class="font-bold text-xl">${Math.round(hourly.temperature_2m[i])}°</p>
+                <div class="hourly-item">
+                    <p class="hour">${hour}</p>
+                    <i class="fa-solid ${weatherInfo.icon}"></i>
+                    <p class="temp">${Math.round(hourly.temperature_2m[i])}°</p>
                 </div>`;
             timeline.innerHTML += itemHTML;
         }
@@ -84,13 +85,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const day = i === 0 ? 'Today' : date.toLocaleDateString([], { weekday: 'short' });
             const weatherInfo = getWeatherInfo(daily.weather_code[i]);
             const itemHTML = `
-                <div class="grid grid-cols-3 items-center gap-4 text-slate-300">
-                    <p class="font-medium">${day}</p>
-                    <div class="flex items-center gap-4">
-                        <i class="fa-solid ${weatherInfo.icon} text-cyan-300 text-xl"></i>
-                        <span class="text-slate-400">${weatherInfo.desc}</span>
+                <div class="daily-item">
+                    <p class="day">${day}</p>
+                    <div class="icon-desc">
+                        <i class="icon fa-solid ${weatherInfo.icon}"></i>
+                        <span class="desc">${weatherInfo.desc}</span>
                     </div>
-                    <p class="text-right font-medium">${Math.round(daily.temperature_2m_max[i])}° / <span class="text-slate-400">${Math.round(daily.temperature_2m_min[i])}°</span></p>
+                    <p class="temps">${Math.round(daily.temperature_2m_max[i])}° / <span>${Math.round(daily.temperature_2m_min[i])}°</span></p>
                 </div>`;
             container.innerHTML += itemHTML;
         }

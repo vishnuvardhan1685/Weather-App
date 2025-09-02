@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glass Weather Dashboard</title>
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+    <div id="loader" class="loader-overlay">
+        <div class="loader-spinner"></div>
+        <p>Fetching Weather Data...</p>
+    </div>
+
+    <main class="container">
+        <div class="grid-container">
+
+            <section class="card search-bar">
+                <input type="text" id="city-search" placeholder="Search for a city...">
+                <button id="search-btn">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </section>
+
+            <section class="card current-weather">
+                <div>
+                    <h2 id="location">--</h2>
+                    <p id="current-date">--</p>
+                </div>
+                <div class="weather-main">
+                    <i id="current-icon" class="fa-solid fa-circle-question"></i>
+                    <h1 id="current-temp">--<span>°C</span></h1>
+                </div>
+                <p id="current-desc">--</p>
+            </section>
+            
+            <section class="card">
+                <h3><i class="fa-solid fa-sun"></i>Sun & Moon</h3>
+                <div class="details-grid">
+                    <div>
+                        <p class="label">Sunrise</p>
+                        <p class="value" id="sunrise-time">--</p>
+                    </div>
+                    <div>
+                        <p class="label">Sunset</p>
+                        <p class="value" id="sunset-time">--</p>
+                    </div>
+                    <div>
+                        <p class="label">Daylight</p>
+                        <p class="value" id="daylight-duration">--</p>
+                    </div>
+                    <div>
+                        <p class="label">UV Index</p>
+                        <p class="value" id="uv-index">--</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card">
+                <h3><i class="fa-solid fa-wind"></i>Wind</h3>
+                <div class="details-grid">
+                    <div>
+                        <p class="label">Speed</p>
+                        <p class="value" id="wind-speed">--</p>
+                    </div>
+                    <div>
+                        <p class="label">Gusts</p>
+                        <p class="value" id="wind-gusts">--</p>
+                    </div>
+                    <div class="details-grid-span-2">
+                        <p class="label">Direction</p>
+                        <p class="value" id="wind-direction">--</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="card">
+                <h3><i class="fa-solid fa-cloud-rain"></i>Precipitation</h3>
+                <div class="details-grid">
+                    <div>
+                        <p class="label">Rain</p>
+                        <p class="value" id="rain-mm">--</p>
+                    </div>
+                    <div>
+                        <p class="label">Chance</p>
+                        <p class="value" id="precipitation-prob">--</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="card">
+                <h3><i class="fa-solid fa-layer-group"></i>Atmosphere</h3>
+                <div class="details-grid">
+                    <div>
+                        <p class="label">Humidity</p>
+                        <p class="value" id="humidity">--</p>
+                    </div>
+                    <div>
+                        <p class="label">Pressure</p>
+                        <p class="value" id="pressure">--</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card hourly-forecast">
+                <h3><i class="fa-solid fa-clock"></i>Hourly Forecast</h3>
+                <div id="hourly-timeline" class="hourly-timeline custom-scrollbar">
+                    </div>
+            </section>
+
+            <section class="card daily-forecast">
+                <h3><i class="fa-solid fa-calendar-week"></i>7-Day Forecast</h3>
+                <div id="daily-forecast-container" class="daily-forecast-container">
+                    </div>
+            </section>
+
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
